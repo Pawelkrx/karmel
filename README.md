@@ -16,7 +16,7 @@
    A palindrome is a word, number, phrase, or other sequence of characters 
    which reads the same backward as forward, such as madam, racecar,(PL) kajak
    
-   "madam","racecar","race cars","kajak"madam, racecar,lady,race cars,kajak
+   "madam","racecar","race cars","kajak"
    
    palindrome.php
    palindrome.js
