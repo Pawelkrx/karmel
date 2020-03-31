@@ -27,4 +27,7 @@
 	random_lotto.php
 	random_lotoo.js
 	
-4)  
+4)  ZADANIE Z GWIAZDKĄ: masz dwa odcinki AB oraz CD, 
+	napisz program który sprawdzi czy odcinki się przecinają, program zwróci true lub 	false. 
+	Czyli na wejściu dostaniesz cztery punkty na wyjściu boolean.
+
