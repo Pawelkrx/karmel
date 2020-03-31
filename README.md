@@ -20,3 +20,8 @@
    
    palindrome.php
    palindrome.js
+   
+3)  napisz program który wylosuje liczby wygranej w totolotka, 
+	generujesz liczby od 1 do 49 i zwracasz sześć różnych 	liczb
+
+	random_lotto.php
