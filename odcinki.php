@@ -5,7 +5,6 @@
 // Pierwszy punk musi mieć mniejszą współrzędną x1 od drugiego punktu x2. 
 class Odcinek
 {
-	
 	//	współrzędne punktu A
 	private $x1;
 	private $y1;
@@ -34,22 +33,35 @@ class Odcinek
 		$this->y2=number_format($B[1],2);
 	
 	
-	// Nie dziel przez zero
-	// Oblicza współczynnik kierunkowy
-	if(	($this->x1-$this->x2)!=0)
-		{
-		$this->a=$a=number_format(($this->y1-$this->y2)/($this->x1-$this->x2),2);
-		}
+	
+		$this->mathA();
+		$this->mathB();
+	
+	
+	echo "a: ".$this->a."<BR>";
+	echo "b: ".$this->b."<BR>";
+	echo "Odcinek w punktach:"."A($this->x1,$this->y1); B($this->x2,$this->y2)"."<BR>";
+	}
+	
+	private function mathB()
+	{
 	// Nie dziel przez zero
 	// Oblicza przecięcie z osią Y0
 	if(	($this->x1-$this->x2)!=0)
 		{
 		$this->b=$b=number_format($this->y1-(	($this->y1-$this->y2)/($this->x1-$this->x2)*$this->x1	));
+		}	
+		
+		
+	}
+	private function mathA()
+	{
+		// Nie dziel przez zero
+		// Oblicza współczynnik kierunkowy
+		if(	($this->x1-$this->x2)!=0)
+		{
+		$this->a=$a=number_format(($this->y1-$this->y2)/($this->x1-$this->x2),2);
 		}
-	
-	echo "a: ".$a."<BR>";
-	echo "b: ".$b."<BR>";
-	echo "Odcinek w punktach:"."A($this->x1,$this->y1); B($this->x2,$this->y2)"."<BR>";
 	}
 	
 	
@@ -146,6 +158,15 @@ class Odcinek
 		return $this->b;
 	}
 }
+
+
+
+
+
+
+
+
+
 
 // Klasa reprezentuje dwa odcinki
 // Sprawdza czy dwie proste się przecinają
