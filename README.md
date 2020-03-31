@@ -25,3 +25,6 @@
 	generujesz liczby od 1 do 49 i zwracasz sześć różnych 	liczb
 
 	random_lotto.php
+	random_lotoo.js
+	
+4)  
