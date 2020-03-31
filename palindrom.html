@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<div id="result">
+</div>
+	<script>	
+	class Palindrom
+		{
+		constructor()
+			{
+			this.word;
+			this.reverseWord; 
+			this.result=null;
+			}
+		
+		
+		// Metoda troche na piechote
+		isPalindrom1(word) 
+			{
+			this.word=word;
+			var reverse="";
+			
+			var komunikat="";
+			
+			
+				for(var i=(this.word.length-1);i>=0;i--)
+				{				
+				reverse+=this.word.charAt(i);
+				}
+				
+			komunikat+=this.word+"==="+reverse+"<BR>";
+			if(this.word===reverse)
+				{
+				komunikat="Wyraz: "+this.word+" <B>JEST</b> palindromem<BR>";
+				this.result=true;
+				}
+				else
+					{
+					komunikat="Wyraz: "+this.word+" <B>NIE</b> jest palindromem<BR>";
+					this.result=false;
+					}
+				
+			document.getElementById("result").innerHTML+=komunikat;	
+			
+			return this.result;
+			}
+			
+		// metoda korzysta z gotowych funkcji 
+		// JS
+		isPalindrom2(word)
+			{
+				this.word=word;
+				
+				var reverse=this.word;
+					reverse=this.word.split('').reverse().join('');
+				this.reverse=reverse;	
+				var komunikat="";
+				
+				if(this.word===this.reverse)
+				{
+				
+				komunikat+="Wyraz: "+this.word+" <B>JEST</b> palindromem<BR>";
+				}else
+					{
+					
+					komunikat+="Wyraz: "+this.word+" <B>NIE JEST</B> palindromem<BR>";
+					}
+									
+			document.getElementById("result").innerHTML+=komunikat;	
+			}
+		
+		}
+	
+	var obj=new Palindrom();
+	
+	var Tablica=["madam","racecar","race cars","kajak"];
+	
+		for(var i=0;i<Tablica.length;i++)
+			{
+			
+			obj.isPalindrom1(Tablica[i]);
+			obj.isPalindrom2(Tablica[i]);
+			}
+	
+	
+	</script>
+</body>
+</html>

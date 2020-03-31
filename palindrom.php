@@ -1,9 +1,5 @@
 <?PHP
 /*
-
-
-
-
 */
 class Palindrom
 {
@@ -13,10 +9,7 @@ class Palindrom
 	
 	public function __construct($word="null")
 	{
-	
-	
-	
-		//$this->isPalindrom($word);
+			//$this->isPalindrom($word);
 	}
 	
 	
