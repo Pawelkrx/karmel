@@ -17,8 +17,8 @@ class Kolko
 			
 	public function __construct()
 	{
-		echo sizeof($this->Punkty);
-		echo "<BR>";
+		//echo sizeof($this->Punkty);
+		//echo "<BR>";
 		for($i=0;$i<sizeof($this->Punkty);$i++)
 		{
 			
@@ -28,6 +28,11 @@ class Kolko
 		$this->PokazGre();
 		$this->Wynik();
 		
+	}
+	
+	public function CreateGameTable()
+	{
+			
 	}
 	
 	public function Wynik()
@@ -99,6 +104,7 @@ class Kolko
 		{
 			foreach($x as $y)
 			{
+			if($y==1){$y="X";}else $y="0";
 			echo $y." | ";				
 			}
 			echo "<BR>";
@@ -127,9 +133,9 @@ class Kolko
 				if(!$this->check($numer,$i))
 				{
 					$losuj=false;
-					echo $numer.":";
+					//echo $numer.":";
 					
-					echo "x:".$this->Punkty[$numer][0].", y:".$this->Punkty[$numer][1]."<BR>";
+					//echo "x:".$this->Punkty[$numer][0].", y:".$this->Punkty[$numer][1]."<BR>";
 				
 					if($start=="1")
 					{
