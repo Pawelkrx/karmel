@@ -6,157 +6,146 @@
 // x = left 
 // y = top 
 
-class Prostokat
+class Rectangle
 {
-
-	private $x;
-	private $y;
+	// lewy górny x
+	public $x1;
+	
+	// lewy górny y
+	public $y1;
+	
+	
+	public $x2;
+	public $y2;
+	
+	// szerokość
 	private $width;
+	
+	// wysokość
 	private $height;
-	private $color="blue";
-	private $border="5";
 	
-	public $style="width:px;height:px;top:px;left:px;position:absolute;border:0px solid color;";
-	public $div="<div id='' style=''></div>";
+	// szerokość linii
+	private $border="1";	
 	
-	function __construct($x=200,$y=200,$width=100,$height=100,$color="black")
+	private $color="black";
+	
+	private $rectangle="<div id='Prostokat' style='{style}'></div>";
+	private $style="margin-left:{left};margin-top:{top};width:{width};height:{height};border:solid 1px {color}
+		;position:absolute;";
+	
+	// maksymalny punkt x
+	public $maxX;
+	// maksymalny punkt y
+	public $maxY;
+	
+	
+	
+	public function __construct($x,$y,$width,$height,$color)
 	{
-		//  left
-		$this->x=$x;
-		// top
-		$this->y=$y;
-		$this->width=$width;$this->border;
-		$this->height=$height;$this->border;
+			$this->color=$color;
+			
+			$this->x1=$x;
+			$this->y1=$y;
+			
+			$this->width=$width;
+			$this->height=$height;
+			
+			$this->x2=$this->x1+$this->width;
+			$this->y2=$this->y1+$this->height;
+			
+			$this->createRectangle();
+			$this->draw();
 		
-		// Korekta do poprawnego wyświetlania
-		$width =$this->width-$this->border;
-		$height=$this->height-$this->border;
-			$this->style=str_replace("width:","width:$width",$this->style);
-			$this->style=str_replace("height:","height:$height",$this->style);
-			$this->style=str_replace("top:","top:$y",$this->style);
-			$this->style=str_replace("left:","left:$x",$this->style);
-			$this->style=str_replace("border:0","border:$this->border",$this->style);
-			$this->style=str_replace("color","$color",$this->style);
-	
-	$this->div=str_replace("style=''","style='".$this->style."'",$this->div);
-	echo $this->div;
 	}
 	
-	public function distance()
+	private function draw()
 	{
-	$x=pow($this->x,2);
-    $y=pow($this->y,2);
-	
-	
-	$distance=round(sqrt($x+$y));
-	//echo $distance;
-	return $distance;
-	}
-	public function leftPoint()
-	{
-		
-		return array($this->x,$this->y);
+		//echo "draw";
+		echo $this->rectangle;
 	}
 	
-	public function maxPoint()
+	private function createRectangle()
 	{
-		$x=$this->x+$this->width;
-		$y=$this->y+$this->height;
-		
-		$Point=array($x,$y);		
-		
-		return $Point;
+		$this->style=str_replace("{left}",$this->x1,$this->style);
+		$this->style=str_replace("{top}",$this->y1,$this->style);
+		$this->style=str_replace("{width}",$this->width,$this->style);
+		$this->style=str_replace("{height}",$this->height,$this->style);
+		$this->style=str_replace("{color}",$this->color,$this->style);
+		$this->rectangle=str_replace("{style}",$this->style,$this->rectangle);
 	}
+	
 }
 
-
-
-
-
-
-
-
-
-
-class PrzecinajaSie
+class Punkt
 {
+	public $x;
+	public $y;
 	
-	private $object1;
-	private $object2;
+	public $width="40";
+	public $height="40";
 	
-	function __construct($object1,$object2)
+	public $centerX;
+	public $leftX;
+	public $rightX;
+	
+	private $punkt="<div id='punkt' style='{style}'>Punkt</div>";
+	private $style="width:{width}px;height:{height}px;margin-left:{left}px;margin-top:{top}px;border: 1px;solid red 1px;background-color:red;position:absolute;";
+	
+	public function __construct($x,$y)
 	{
-		$this->object1=$object1;
-		$this->object2=$object2;
-		//$this->object1->distance();
-		$this->czyPrzecinaja();
+		$this->x=$x;
+		$this->y=$y;
+		
+		$this->rightX=$this->x+$this->width;
+		$this->centerX=$this->width/2;
+		
+		$this->createPoint();
+		
+		echo $this->punkt;
 	}
 	
-	private function czyPrzecinaja()
+	private function createPoint()
 	{
-		// blue is nr 2
-		// red is nr 1
-		//echo $this->object1->leftPoint()[0]."<BR>";
-		//echo $this->object1->leftPoint()[1]."<BR>";
-		echo "Współrzędne Prostokat nr1:".$this->object1->leftPoint()[0].','.$this->object1->leftPoint()[1];
-		echo "<BR>";
-		echo "Distance:".$this->object1->distance()."<BR>";		
-		echo "Współrzędne Prostokąt nr2:".$this->object2->leftPoint()[0].','.$this->object2->leftPoint()[1];
-		echo "<BR>";
-		echo "Distance:".$this->object2->distance()."<BR>";
+			$this->style=str_replace("{width}",$this->width,$this->style);
+			$this->style=str_replace("{height}",$this->height,$this->style);
+			$this->style=str_replace("{left}",$this->x+1,$this->style);
+			$this->style=str_replace("{top}",$this->y,$this->style);
+			$this->punkt=str_replace("{style}",$this->style,$this->punkt);			
+	}	
+}
+
+
+class Przeciecie
+{
+	public function __construct($Rect1,$Rect2)
+	{
+		echo "Czy przecinają się?<BR>";
 		
-		if($this->object1->distance()<$this->object2->distance())
+		//echo "$Rect2->x1 > $Rect1->x1 && $Rect2->x1 < $Rect1->x2"."<BR>";
+		//echo "||<BR>";
+		//echo "$Rect2->x2 > $Rect1->x1 && $Rect2->x2 < $Rect1->x2<BR>";
+		if(	( ($Rect2->x1 > $Rect1->x1 && $Rect2->x1 < $Rect1->x2
+			  ||
+			  $Rect2->x2 > $Rect1->x1 && $Rect2->x2 < $Rect1->x2)
+			  &&
+			  ($Rect2->y1 > $Rect1->y1 && $Rect2->y1 < $Rect1->y2
+			  ||
+			  $Rect2->y2 > $Rect1->y1 && $Rect2->y2 < $Rect1->y2)			  
+			)
+		  )//if
+		{
+			echo "Przecinaja sie w osi X i Y<BR>";
+		}else
 			{
-				echo "Object1 jest bliżej<BR>";
-				
-				// Jeśli leftPoint Obiektu dalszego
-			    echo $this->object1->maxPoint()[0];
-				echo ",";
-				echo $this->object1->maxPoint()[1];
-				
-				echo "<BR>";
-				// Jeśli leftPoint Obiektu dalszego
-			    echo $this->object2->leftPoint()[0];
-				echo ",";
-				echo $this->object2->leftPoint()[1];
-				
-				if($this->object1->maxPoint()[0]>$this->object2->leftPoint()[0]
-				   &&
-				   $this->object1->maxPoint()[1]>$this->object2->leftPoint()[1]
-				  )
-				{
-					echo "Przecinaja sie w osi X i Y<BR>";
-				}else 
-					{
-						if( $this->object1->maxPoint()[0]==$this->object2->leftPoint()[0]
-							&&
-						    $this->object1->maxPoint()[1]>=$this->object2->leftPoint()[1]
-							||
-							$this->object1->maxPoint()[0]<=$this->object2->leftPoint()[0]
-							&&
-						    $this->object1->maxPoint()[1]==$this->object2->leftPoint()[1]
-						  )
-						  {
-							echo "Nakładają się na siebie<BR>";  
-						  }
-					}
-					
-				
-								
-				
-			}else
-				if($this->object1->distance()>$this->object2->distance())
-				{
-				echo "Object 2 jest bliżej<BR>";
-				}else 
-					{
-					echo "Object1 i Object2 mają tą samą odległość więc przecinają się<BR>";
-					}
-		
-		
+				echo "Nie przecinaja sie<BR>";
+			}
 		
 	}
 }
+// x,y,height,width
+$Rectangle1=new Rectangle(100,100,200,300,"brown");
+$Rectangle2=new Rectangle(100,100,10,25,"blue");
+$Przecinaja=new Przeciecie($Rectangle1,$Rectangle2);
 
 
 ?>
@@ -168,10 +157,7 @@ class PrzecinajaSie
 <DIV id="Prostokat1"></DIV>
 <DIV id="Prostokat2"></DIV>
 <?php
-$Prostokat1=new Prostokat(100,100,50,100,"blue");
-$Prostokat2=new Prostokat(140,190,100,200,"brown");
 
-$PrzecinajaSie=new PrzecinajaSie($Prostokat1,$Prostokat2);
 ?>
 </BODY>
 </HTML>
