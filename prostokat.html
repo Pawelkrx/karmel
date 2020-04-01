@@ -1,0 +1,85 @@
+
+<HTML>
+
+	<HEAD></HEAD>
+
+
+	<BODY>
+	<div id="result">Result</div>
+	<script>
+	
+	class Rectangle
+	{
+		constructor(x,y,width,height,color)
+		{
+		
+		this.x1=x;
+		this.y1=y;
+		
+		this.width=width;
+		this.height=height;
+		
+		this.color=color;
+		
+		this.x2=this.x1+this.width;
+		this.y2=this.y1+this.height;
+		
+		
+		this.drawRectangle();
+		}
+		
+		drawRectangle()
+		{
+		var rect=document.createElement("DIV");
+		var t1=document.createTextNode("Text");
+		
+		rect.appendChild(t1);
+		
+		rect.style.width=this.width;
+		rect.style.height=this.height;
+		rect.style.border="solid 1px ";
+		rect.style.borderColor="black";
+		rect.style.backgroundColor=this.color;
+		rect.style.position="absolute";
+		rect.style.marginLeft=this.x1;
+		rect.style.marginTop=this.y1;
+		document.body.appendChild(rect);
+		}
+	
+	}
+	
+	class Przecinaja
+	{
+		constructor(R1,R2)
+		{
+			document.getElementById("result").innerHTML=R1.x1+","+R1.y1+"<BR>";
+			
+			var k=R2.x1+" > "+R1.x1+" && "+R2.x1+" < "+R1.x2+"<BR>";
+			document.getElementById("result").innerHTML+=k;
+			if( (R2.x1 > R1.x1 && R2.x1 < R1.x2	
+				||
+				R2.x2 > R1.x1 && R2.x1 < R1.x1)				
+				&&
+				(R2.y1 > R1.y1 && R2.y1 < R1.y2	
+				||
+				R2.y2 > R1.y1 && R2.y1 < R1.y2)
+				)
+			{
+			document.getElementById("result").innerHTML+="Przecinaja sie w poziomie i pionie<BR>";
+			}
+			
+		}
+	
+	}
+	
+	R1=new Rectangle(50,50,100,150,"blue");
+	R2=new Rectangle(140,120,50,50,"green");
+	Pr=new Przecinaja(R1,R2);
+	
+	</script>
+	</BODY>
+
+</HTML>
+
+
+
