@@ -49,7 +49,7 @@ class Odcinek
 	// Oblicza przecięcie z osią Y0
 	if(	($this->x1-$this->x2)!=0)
 		{
-		$this->b=$b=number_format($this->y1-(	($this->y1-$this->y2)/($this->x1-$this->x2)*$this->x1	));
+		$this->b=$b=number_format($this->y1-(	($this->y1-$this->y2)/($this->x1-$this->x2)*$this->x1	),2);
 		}	
 		
 		
@@ -62,6 +62,7 @@ class Odcinek
 		{
 		$this->a=$a=number_format(($this->y1-$this->y2)/($this->x1-$this->x2),2);
 		}
+		
 	}
 	
 	
@@ -79,13 +80,14 @@ class Odcinek
 		// x=(y-b)/a
 		//$x=(float)$x;
 		$isX=round(($y-$this->b)/$this->a,4);
-		//echo $x-$isX."<BR>";
 		
+		//echo $x-$isX."<BR>";
+		//echo "isX:".$isX."===".$x."<BR>";		
 		// Korekta do zaokrąglania
 		// 
-		if($x-$isX<0.01){$isX=$x;}
+		if(	abs($x-$isX)<0.09){$isX=$x;}
 		// rzutowanie typu
-		$isX=((int) (($isX * 100))/100);// = 5.49
+		$isX=((int) (($isX * 100))/100);
 		
 		//echo "$isX==$x"."<BR>";				
 		if($isX==$x)
@@ -105,8 +107,13 @@ class Odcinek
 	{
 		// $y=ax+b
 		$isY=$this->a*$x+$this->b;
-		$isY=number_format($isY,2);
-		$y=number_format($y,2);
+		$isY=number_format($isY,4);
+		$y=number_format($y,4);
+		
+		if(abs($y-$isY<0.09)){$isY=$y;}
+		
+		//echo abs($y-$isY)."<BR>";		
+		//echo "isY:".$isY."==".$y."<BR>";
 		if($isY==$y)
 		{
 			//echo "y znajduje się na linii<BR>";
@@ -124,21 +131,21 @@ class Odcinek
 			// oraz x>=x1 i x<=x2
 			if($this->isX($x,$y) && $this->isY($x,$y))
 			{
-				//echo "Punkt znajduje się na linii<BR>";
+				echo "Punkt znajduje się na linii<BR>";
 				if($x>=$this->x1 && $x<=$this->x2)
 				{
-					//echo "Punkt znajduje sie na odcinku<BR>";
+					echo "Punkt znajduje sie na odcinku<BR>";
 					return true;
 				}
 				else
 					{
 					return false;
-					//echo "Punkt nie znajduje się na odcinku<BR>";
+					echo "Punkt nie znajduje się na odcinku<BR>";
 					}
 			}else
 				{
 				return false;
-				//echo "Punkt nie znajduje się na linii<BR>";
+				echo "Punkt nie znajduje się na linii<BR>";
 				}
 		
 	}
@@ -208,25 +215,33 @@ class DwieProste
 	// Punkt przecięcia znajduje się na Odcinek1 i Odcinek2
 	public function czyPrzecinajaSie()
 	{
-		
-			if($this->Odcinek1->isExist($this->x,$this->y) && $this->Odcinek2->isExist($this->x,$this->y))
+			echo "czy przecinaja sie<BR>";
+			//echo $this->Odcinek1->isExist($this->x,$this->y);			
+			//var_dump($this->Odcinek2->isExist($this->x,$this->y));
+		    //var_dump($this->Odcinek1->isExist($this->x,$this->y));
+		    //echo "<BR>";
+		    //var_dump($this->Odcinek2->isExist($this->x,$this->y));
+			
+			if(	$this->Odcinek1->isExist($this->x,$this->y) &&	$this->Odcinek2->isExist($this->x,$this->y)	)
 			{
-			echo "Odcinki sie przecinaja<BR>";
-			return true;
+				echo "Odcinki się <B>przecinają</b><BR>";
 			}else
 				{
-					return false;
+				echo "Odcinki się nie przecinają<BR>";
 				}
+			
+			
+		
 	}
 	// Funkcja zwraca punkt Przeciecia się linii
 	public function punktPrzeciecia()
 	{
 		if($this->a1!=$this->a2)
 		{
-		$this->x=number_format(($this->b1-$this->b2)/($this->a2-$this->a1),2);
-		//echo $this->x;
-		$this->y=number_format(($this->a2*$this->b1-$this->b2*$this->a1)/($this->a2-$this->a1),2);
-		echo "Punkt przecięcia:".$this->x.",".$this->y."<BR>";	
+			$this->x=number_format(($this->b1-$this->b2)/($this->a2-$this->a1),2);
+			//echo $this->x;
+			$this->y=number_format(($this->a2*$this->b1-$this->b2*$this->a1)/($this->a2-$this->a1),2);
+			echo "Punkt Przeciecia TO:".$this->x.",".$this->y."<BR>";	
 		}
 		else
 		{
@@ -235,8 +250,8 @@ class DwieProste
 	}
 }
 
-$Odcinek1=new Odcinek(array(2.50,3.50),array(8.00,7.00));
-$Odcinek2=new Odcinek(array(5.00,7.50),array(12.50,4.00));
+$Odcinek1=new Odcinek(array(-2,-1),array(3,4));
+$Odcinek2=new Odcinek(array(1.5,1),array(6,2));
 $PunktPrzeciecia=new DwieProste($Odcinek1,$Odcinek2);
 
 ?>
