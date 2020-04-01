@@ -216,11 +216,10 @@ class DwieProste
 	public function czyPrzecinajaSie()
 	{
 			echo "czy przecinaja sie<BR>";
-			//echo $this->Odcinek1->isExist($this->x,$this->y);			
-			//var_dump($this->Odcinek2->isExist($this->x,$this->y));
-		    //var_dump($this->Odcinek1->isExist($this->x,$this->y));
+			//var_dump($this->Odcinek1->isExist($this->x,$this->y));
 		    //echo "<BR>";
 		    //var_dump($this->Odcinek2->isExist($this->x,$this->y));
+			//echo "<BR>";
 			
 			if(	$this->Odcinek1->isExist($this->x,$this->y) &&	$this->Odcinek2->isExist($this->x,$this->y)	)
 			{

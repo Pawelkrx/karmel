@@ -1,0 +1,320 @@
+<HTML>
+
+
+<BODY>
+<DIV id="result"></div>
+
+<SCRIPT>
+
+	class Odcinek
+	{
+		constructor(A,B)
+		{
+			
+			// współrzędne punktu A
+			this.x1=A[0];
+			this.y1=A[1];
+			
+			// współrzędne punktu B
+			this.x2=B[0];
+			this.y2=B[1];
+			
+			// współczynnik kierunkowy
+			this.a=this.mathA();
+			
+			// miejsce przeciecia z osią YO
+			this.b=this.mathB();
+					
+			this.method1();
+			
+			var komunikat="";
+			komunikat+="a: "+this.a+"<BR>";
+			komunikat+="b: "+this.b+"<BR>";
+			komunikat+="Odcinek w punktach:"+"A("+this.x1+","+this.y1+")"+" B("+this.x2+","+this.y2+")"+"<BR>";
+			
+			document.getElementById("result").innerHTML+=komunikat;
+					
+		}		
+		
+		// Funkcja sprawdza czy wspołrzędna x punktu x,y
+		// znajduje się na linii prostej	
+		// reprezentującej odcinek
+		// zwraca true lub false. 
+		isX(x,y)
+		{
+			var x=this.round(x,2);
+			var y=this.round(y,2);
+			
+			
+			// y=ax+b
+			// y-b=ax
+			// x=(y-b)/a
+			//$x=(float)$x;
+			var isX=this.round((y-this.b)/this.a,4);
+			
+			// Korekta do zaokrąglania
+			// 
+			if(x-isX<0.01){isX=x;}
+			// rzutowanie typu
+		    isX=(isX*100)/100;
+		
+		var komunikat="";
+		
+		//komunikat="isX==x"+"<BR>";			
+		if(isX==x)
+		{
+			//echo "x znajduje się na linii<BR>";
+			return true;
+		}else {
+			//echo "x nie znajduje się na linii<BR>";
+			return false;
+			}
+			
+			
+		document.getElementById("result").innerHTML+=komunikat;	
+		}
+		
+		
+		
+		
+		
+		// Funkcja zwraca true lub false
+		// sprawdza czy współrzędne y punktu x,y
+		// znajduje się na lini
+		isY(x,y)
+		{
+			// $y=ax+b
+			var isY=this.a*x+this.b;
+			isY=this.round(isY,2);
+			y=this.round(y,2);
+				if(isY==y)
+				{
+				//echo "y znajduje się na linii<BR>";
+				return true;
+				}else {
+				//echo "y nie znajduje się na linii<BR>";
+				return false;}
+		}
+		
+		
+		
+		
+		
+		// Sprawdza czy punkt znajduje się na odcinku
+		isExist(x,y)
+		{
+			// Punkt znajduje się na odcinku jeśli
+			// znajduje się na lini
+			// oraz x>=x1 i x<=x2
+			
+			if(this.isX(x,y) && this.isY(x,y))
+			{
+				//echo "Punkt znajduje się na linii<BR>";
+				if(x>=this.x1 && x<=this.x2)
+				{
+					//echo "Punkt znajduje sie na odcinku<BR>";
+					return true;
+				}
+				else
+					{
+					return false;
+					//echo "Punkt nie znajduje się na odcinku<BR>";
+					}
+			}else
+				{
+				return false;
+				//echo "Punkt nie znajduje się na linii<BR>";
+				}
+		
+		}
+		
+		
+		
+		
+		
+	// zwraca współczynnik kierunkowy a
+	// $a
+	getA()
+	{
+		return this.a;
+	}
+	
+	
+	// Zwraca przecięcie z osią Y0
+	// współrzędna b
+	getB()
+	{
+		return this.b;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		round(x,to)
+		{
+		var factor=Math.pow(10,to);
+		var res=Math.round(x*factor)/factor;
+		return res;
+		}
+		
+		mathB()
+		{
+		// Nie dziel przez zero
+		// Oblicza przecięcie z osią Y0
+		var res;
+		if(	(this.x1-this.x2)!=0)
+			{
+			res=this.y1-((this.y1-this.y2)/(this.x1-this.x2)*this.x1);
+			}	
+		
+		// Zaokrąglenie do dwóch miejsc po przecinku
+		res=Math.round(res*100)/100;
+		return res;
+		}
+		
+		mathA()
+		{
+			var res;
+			// Nie dziel przez zero
+			// Oblicza współczynnik kierunkowy
+			if(	(this.x1-this.x2)!=0)
+				{
+				res=(this.y1-this.y2)/(this.x1-this.x2);
+				}
+		
+		res=Math.round(res*100)/100;
+		return res;
+		}
+		
+			
+		
+		method1()
+		{
+			document.getElementById("result").innerHTML+="Dziala<BR>";
+		}
+	}
+	
+	
+	
+	
+	class DwieProste
+	{
+				
+		constructor(Odcinek1,Odcinek2)
+		{
+			this.Odcinek1=Odcinek1;
+			this.Odcinek2=Odcinek2;
+			
+			// $this->Odcinek1=$Odcinek1;
+			// $this->Odcinek2=$Odcinek2;
+			
+			this.a1=this.Odcinek1.getA();
+			this.b1=this.Odcinek1.getB();
+			// document.getElementById("result").innerHTML+=this.a1+"<BR>";	
+			// document.getElementById("result").innerHTML+=this.b1+"<BR>";	// 
+			
+			this.a2=this.Odcinek2.getA();
+			//document.getElementById("result").innerHTML+=this.a2+"<BR>";	
+			
+			this.b2=this.Odcinek2.getB();
+			//echo "y=$this->a1*x+$this->b1<BR>";
+			var komunikat="";	
+			//var komunikat="y="+this.a1+"*x"+"+"+this.b1+"<BR>";
+			//komunikat+="y="+this.a2+"*x"+"+"+this.b2+"<BR>";
+			
+		this.punktPrzeciecia();
+		this.czyPrzecinajaSie();
+		
+		document.getElementById("result").innerHTML+=komunikat;	
+		document.getElementById("result").innerHTML+="Dziala<BR>";				
+		}
+	
+	
+	
+	
+	// Funkcja sprawdza czy dwa odcinki się przecinają
+	// Odcinki przecinają się gdy gdy spełnione są dwa warunki:
+	// Punkt przecięcia znajduje się na Odcinek1 i Odcinek2
+	czyPrzecinajaSie()
+	{
+			var komunikat="czy przecinaja sie<BR>";
+			//echo $this->Odcinek1->isExist($this->x,$this->y);			
+			//var_dump($this->Odcinek2->isExist($this->x,$this->y));
+		    //var_dump($this->Odcinek1->isExist($this->x,$this->y));
+		    //echo "<BR>";
+		    //var_dump($this->Odcinek2->isExist($this->x,$this->y));
+			//komunikat+=this.Odcinek1.isExist(this.x,this.y);
+			//komunikat+=this.Odcinek2.isExist(this.x,this.y);
+			
+			
+			
+			if(	this.Odcinek1.isExist(this.x,this.y) &&	this.Odcinek2.isExist(this.x,this.y)	)
+			{
+				komunikat+="Odcinki się <B>przecinaja</b><BR>";
+			}else
+				{
+				komunikat+="Odcinki się nie przecinają<BR>";
+				}
+	
+	document.getElementById("result").innerHTML+=komunikat;
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	// Funkcja zwraca punkt Przeciecia się linii
+	punktPrzeciecia()
+	{
+		if(this.a1!=this.a2)
+		{
+		this.x=this.round((this.b1-this.b2)/(this.a2-this.a1),2);
+		//echo $this->x;
+		this.y=this.round((this.a2*this.b1-this.b2*this.a1)/(this.a2-this.a1),2);
+		//echo "Punkt przecięcia:".$this->x.",".$this->y."<BR>";	
+		document.getElementById("result").innerHTML+="Punkt przeciecia:"+this.x+","+this.y+"<BR>";
+		}
+		else
+		{
+			//echo "Proste nigdy się nie przetną<BR>";
+			document.getElementById("result").innerHTML+="Proste nigdy sie nie przetna<BR>";
+		}
+	}
+	
+	
+	round(x,to)
+		{
+		var factor=Math.pow(10,to);
+		var res=Math.round(x*factor)/factor;
+		return res;
+		}
+	
+	
+	
+	
+	}// end class DwieProste
+	
+	//var Odcinek1=new Odcinek();
+	//A(2.50,3.50); B(8.00,7.00)
+	//	$Odcinek1=new Odcinek(array(-2,-1),array(3,4));
+	//	$Odcinek2=new Odcinek(array(1.5,1),array(6,2));
+	var Odcinek1=new Odcinek(["-2","-1"],["3.00","4.00"]);
+	var Odcinek2=new Odcinek(["1.5","1.00"],["6.00","2.00"]);
+	
+	var Proste=new DwieProste(Odcinek1,Odcinek2);
+
+</SCRIPT>
+
+</BODY>
+
+</HTML>
